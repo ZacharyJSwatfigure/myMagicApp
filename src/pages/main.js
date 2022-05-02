@@ -1,10 +1,12 @@
 import React from "react";
 import Navbar from "../mainComponents/navbar/navbar.js";
 
-export default function mainPage() {
+function MainPage() {
   return (
     <section>
       <Navbar />
     </section>
   );
 }
+
+export default MainPage;

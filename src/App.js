@@ -1,9 +1,10 @@
-import mainPage from "./pages/main.js";
+import React from "react";
+import MainPage from "./pages/main.js";
 
 function App() {
   return (
     <div>
-      <mainPage />
+      <MainPage />
     </div>
   );
 }
