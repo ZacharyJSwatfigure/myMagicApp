@@ -1,0 +1,38 @@
+
+
+.NavBarContainer{
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  border-bottom: 2px solid black;
+  padding: 10px;
+  width: 60%;
+}
+
+.NavBarList {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.nav-links {
+  padding: 10px;
+  margin: 10px;
+  color: white;
+  background-color: rgb(157,45,221);
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 25px;
+}
+
+a:hover {
+  background-color: rgb(56, 31, 167);
+  cursor: pointer;
+}
+
+.currentPageCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}

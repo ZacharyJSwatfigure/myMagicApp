@@ -1,0 +1,26 @@
+.noDots {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-right: 10%
+}
+
+.currentUser {
+  display: flex;
+  border: 1px solid black;
+  padding: 10px;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+
+.currentUserBox {
+  display: flex;
+  border: 1px solid black;
+  padding : 10px;
+  
+  
+}
