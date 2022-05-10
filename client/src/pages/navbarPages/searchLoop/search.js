@@ -2,12 +2,10 @@ import React from "react";
 
 export default function Search() {
   const searchCard = async () => {
-    let res = await fetch("https://api.scryfall.com/cards/random", {
-      method: "GET",
-    });
-    let response = JSON.stringify(res);
-    console.log(response.name);
-    return await res.json();
+    let res = await fetch("https://api.scryfall.com/cards/random");
+    let response = await res.json();
+
+    console.log(response);
   };
 
   return (
