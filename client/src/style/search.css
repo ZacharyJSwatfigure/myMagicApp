@@ -1,37 +1,4 @@
 
-
-.liContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.ulContainer {
-  display : flex;
-  flex-direction: column;
-  list-style: none;
-}
-
-.cardName {
-  font-size: 25px;
-  padding-bottom: 50%;
-  text-decoration: underline;
-}
-
-.cardPrices {
-  font-size: 20px;
-  padding-top: 25%;
-}
-
-.cardPicture {
-  padding-left: 50%; 
-}
-
-.allHolder {
-  border-bottom: 2px solid black
-}
-
 .userInput {
   display: flex;
   align-items: center;
@@ -39,3 +6,8 @@
   margin: 0 auto;
   margin-top: 2%;
 }
+
+.allHolder {
+  border-bottom: 2px solid black
+}
+
