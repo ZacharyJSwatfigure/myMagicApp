@@ -7,7 +7,21 @@
   margin-top: 2%;
 }
 
-.allHolder {
-  border-bottom: 2px solid black
+.cardListUl {
+  list-style-type: none;
+}
+
+.cardList {
+  margin: 0 auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
+  color: white;
+
+}
+.popUpContainer {
+  background-color: red;
+}
+.popUpText {
+  font-size: 30px;
 }
 
