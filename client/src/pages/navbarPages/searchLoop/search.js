@@ -6,9 +6,27 @@ export default function Search() {
   const [cards, setCards] = useState([]);
   const [buttonPopUp, setButtonPopUp] = useState(false, "");
   const [userInput, setUserInput] = useState("");
-  const handleInputChange = (e) => {
-    setUserInput(e.target.value);
+  const [userAutofill, setUserAutofill] = useState([]);
+
+  //this is where I am trying to make the second api CALL
+  const handleInputChange = async (userInput) => {
+    setUserInput(userInput);
+    userAutofill = [];
+    let autofill = await fetch(
+      `https://api.scryfall.com/cards/autocomplete?q=${userInput}`
+    );
+    //after api call await the response and push it to userAutofill
+    let autofillRes = await autofill.json();
+    userAutofill.push(autofillRes);
+    // console logs
+    console.log(userAutofill);
+    console.log(userInput);
+    //console.logs
+    //userAutofill is constant error
+    setUserAutofill(userAutofill);
+    return userAutofill;
   };
+
   const searchCard = async (cards) => {
     cards = [];
 
@@ -30,8 +48,8 @@ export default function Search() {
         onChange={handleInputChange}
         value={userInput}
         className="userInput"
-        onSubmit={searchCard}
       ></input>
+
       <button className="userInput" type="submit" onClick={searchCard}>
         Search
       </button>
