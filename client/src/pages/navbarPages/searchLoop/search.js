@@ -13,7 +13,7 @@ export default function Search() {
     cards = [];
 
     let res = await fetch(
-      `https://api.scryfall.com/cards/autocomplete?q=${userInput}`
+      `https://api.scryfall.com/cards/named?exact=${userInput}`
     );
     let response = await res.json();
     cards.push(response);
@@ -36,19 +36,29 @@ export default function Search() {
         Search
       </button>
       <ul className="cardListUl">
-        {cards.map((cards, index) => {
+        {cards.map((cards) => {
           return (
-            <li className="cardList" key={index}>
-              <a onClick={(e) => setButtonPopUp(true, e.target.value)}>
-                {cards.data}
-              </a>
+            <li className="cardList" key={cards.id}>
+              <a onClick={() => setButtonPopUp(true)}>{cards.name}</a>
             </li>
           );
         })}
       </ul>
       <CardPopup trigger={buttonPopUp} setTrigger={setButtonPopUp}>
         {cards.map((cards) => {
-          return <p>{cards.name}</p>;
+          return (
+            <section className="popUpContainer">
+              <div>
+                <h1 className="popUpText">{cards.name}</h1>
+              </div>
+              <div>
+                <h1 className="popUpText">USD: {cards.prices.usd}$</h1>
+                <h1 className="popUpText">
+                  USD Foil: {cards.prices.usd_foil}$
+                </h1>
+              </div>
+            </section>
+          );
         })}
       </CardPopup>
     </section>

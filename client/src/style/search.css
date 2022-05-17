@@ -20,8 +20,10 @@
 }
 .popUpContainer {
   background-color: red;
+  width: 60%;
 }
 .popUpText {
   font-size: 30px;
+  color : white;
 }
 
