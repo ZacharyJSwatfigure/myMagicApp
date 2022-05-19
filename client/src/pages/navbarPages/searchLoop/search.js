@@ -6,16 +6,14 @@ export default function Search() {
   const [cards, setCards] = useState([]);
   const [buttonPopUp, setButtonPopUp] = useState(false, "");
   const [userInput, setUserInput] = useState("");
-  const [selected, setSelected] = useState("");
+  // const [selected, setSelected] = useState("");
+
+  // possible function starts
+  // possible function ends
 
   const handleUserChange = (e) => {
     setUserInput(e.target.value);
   };
-
-  // const userSelect = (event) => {
-  //   console.log(event.target.value);
-  //   setSelected(event.target.value);
-  // };
 
   const searchCard = async (cards) => {
     cards = [];
@@ -28,7 +26,23 @@ export default function Search() {
     cards.push(response);
 
     setCards(cards);
+    displaySearch();
+    console.log(cards[0].data);
+
     return cards;
+  };
+  const displaySearch = () => {
+    if (cards) {
+      let cardsInSearch = cards[0].data;
+      console.log("here ---> " + cardsInSearch);
+      cardsInSearch.map((index) => {
+        return (
+          <li className="cardList" key={index}>
+            hello
+          </li>
+        );
+      });
+    }
   };
   return (
     <section>
@@ -48,17 +62,9 @@ export default function Search() {
       </button>
 
       {/* trying something start*/}
-
+      <ul>{cards ? displaySearch() : null}</ul>
       {/* trying something end*/}
-      <ul className="cardListUl">
-        {cards.map((cards, index) => {
-          return (
-            <li className="cardList" key={index}>
-              <a onClick={() => setButtonPopUp(true)}>{cards.data}</a>
-            </li>
-          );
-        })}
-      </ul>
+
       {/* here is the popup  */}
       <CardPopup trigger={buttonPopUp} setTrigger={setButtonPopUp}></CardPopup>
     </section>
