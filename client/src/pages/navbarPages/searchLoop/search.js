@@ -4,9 +4,9 @@ import CardPopup from "../searchLoop/popUpCard.js";
 
 export default function Search() {
   const [cards, setCards] = useState([]);
-  const [buttonPopUp, setButtonPopUp] = useState(false, "");
+  const [buttonPopUp, setButtonPopUp] = useState(false);
   const [userInput, setUserInput] = useState("");
-  // const [selected, setSelected] = useState("");
+  const [specificCard, setSpecificCard] = useState(null);
 
   // possible function starts
   // possible function ends
@@ -15,35 +15,36 @@ export default function Search() {
     setUserInput(e.target.value);
   };
 
-  const searchCard = async (cards) => {
-    cards = [];
-
+  const bestMatchingNames = async () => {
     let res = await fetch(
       `https://api.scryfall.com/cards/autocomplete?q=${userInput}`
     );
-    let response = await res.json();
 
-    cards.push(response);
-
-    setCards(cards);
-    displaySearch();
-    console.log(cards[0].data);
-
-    return cards;
-  };
-  const displaySearch = () => {
-    if (cards) {
-      let cardsInSearch = cards[0].data;
-      console.log("here ---> " + cardsInSearch);
-      cardsInSearch.map((index) => {
-        return (
-          <li className="cardList" key={index}>
-            hello
-          </li>
-        );
-      });
+    if (res.status !== 200) {
+      console.error("Something went wrong! Try again later.");
+      setCards([]);
+      return;
     }
+    let response = await res.json();
+    setCards(response.data);
   };
+
+  const searchCard = async (cardName) => {
+    let res = await fetch(
+      `https://api.scryfall.com/cards/named?exact=${cardName}`
+    );
+
+    if (res.status !== 200) {
+      console.error("Something went wrong! Try again later.");
+      setSpecificCard(null);
+      return;
+    }
+
+    let response = await res.json();
+    setSpecificCard(response);
+    setButtonPopUp(true);
+  };
+
   return (
     <section>
       <section>
@@ -57,16 +58,31 @@ export default function Search() {
         ></input>
       </section>
 
-      <button className="userInput" type="submit" onClick={searchCard}>
+      <button className="userInput" type="submit" onClick={bestMatchingNames}>
         Search
       </button>
 
       {/* trying something start*/}
-      <ul>{cards ? displaySearch() : null}</ul>
+      <ul>
+        {cards.map((card, index) => {
+          return (
+            <li
+              key={index}
+              value={card}
+              className="cardList"
+              onClick={() => searchCard(card)}
+            >
+              <p>{card}</p>
+            </li>
+          );
+        })}
+      </ul>
       {/* trying something end*/}
 
       {/* here is the popup  */}
-      <CardPopup trigger={buttonPopUp} setTrigger={setButtonPopUp}></CardPopup>
+      <CardPopup trigger={buttonPopUp} setTrigger={setButtonPopUp}>
+        <h3>{specificCard.name}</h3>
+      </CardPopup>
     </section>
   );
 }
