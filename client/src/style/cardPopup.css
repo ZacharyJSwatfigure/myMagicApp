@@ -4,13 +4,13 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  z-index: 1;
+  z-index: 2;
 }
 
 .popUpInner {
@@ -19,10 +19,18 @@
   width: 100%;
   max-width: 640px;
   background-color: white;
+  
 }
 
 .popUpInner .close-btn {
-  position: absolute;
+  position: relative;
   top: 16px;
   right: 16px;
+}
+
+.cardListContainer {
+  width: 100%;
+  height: 100%;
+  
+  z-index: 1;
 }

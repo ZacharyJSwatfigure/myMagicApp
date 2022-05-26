@@ -63,25 +63,50 @@ export default function Search() {
       </button>
 
       {/* trying something start*/}
-      <ul>
-        {cards.map((card, index) => {
-          return (
-            <li
-              key={index}
-              value={card}
-              className="cardList"
-              onClick={() => searchCard(card)}
-            >
-              <p>{card}</p>
-            </li>
-          );
-        })}
-      </ul>
+      {cards.length >= 1 ? (
+        <ul className="cardListUl">
+          {cards.map((card, index) => {
+            return (
+              <li
+                key={index}
+                value={card}
+                className="cardList"
+                onClick={() => searchCard(card)}
+              >
+                <section>
+                  <p>{card}</p>
+                </section>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <h1></h1>
+      )}
+
       {/* trying something end*/}
 
       {/* here is the popup  */}
       <CardPopup trigger={buttonPopUp} setTrigger={setButtonPopUp}>
-        <h3>{specificCard.name}</h3>
+        {specificCard ? (
+          <section className="popUpContainer">
+            <section className="popUpText">
+              <div>
+                <h3>{specificCard.name}</h3>
+                <div>
+                  <image
+                    alt="card image"
+                    src={specificCard.image_uris.small}
+                  ></image>
+                </div>
+                <div>USD: {specificCard.prices.usd}$</div>
+                <div>USD: {specificCard.prices.usd_foil}$</div>
+              </div>
+            </section>
+          </section>
+        ) : (
+          <h1></h1>
+        )}
       </CardPopup>
     </section>
   );
