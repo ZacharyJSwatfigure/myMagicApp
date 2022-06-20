@@ -94,13 +94,10 @@ export default function Search() {
               <div>
                 <h3>{specificCard.name}</h3>
                 <div>
-                  <image
-                    alt="card image"
-                    src={specificCard.image_uris.small}
-                  ></image>
+                  <image></image>
                 </div>
                 <div>USD: {specificCard.prices.usd}$</div>
-                <div>USD: {specificCard.prices.usd_foil}$</div>
+                <div>Foil: {specificCard.prices.usd_foil}$</div>
               </div>
             </section>
           </section>

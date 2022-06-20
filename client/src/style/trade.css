@@ -1,0 +1,48 @@
+
+
+.allHolderLRG {
+  width: 500px;
+  height: 500px;
+  background-image: blue;
+  margin-top: 10%;
+}
+
+.allHolder {
+  display: flex;
+  flex-direction: row;
+  
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  margin: 0 auto;
+}
+
+.tradeHolder {
+  width: 500px;
+  background-color: black;
+  padding: 25px;
+  margin: 20px;
+}
+
+.cardListOl {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  list-style-type: none;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.tradeListItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding-bottom: 20px;
+  border: 1px solid white;
+  border-radius: 20px;
+  padding: 10px;
+  color: white;
+}
