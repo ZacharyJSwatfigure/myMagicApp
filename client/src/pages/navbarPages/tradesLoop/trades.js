@@ -42,12 +42,11 @@ export default function Trade() {
       `https://api.scryfall.com/cards/named?exact=${cardName}`
     );
     let response = await res.json();
-    console.log(response);
-    if (tradeOrReceive) {
-      let currentList = trades;
-      currentList.push(response);
-      setTrades(currentList);
-      console.log(trades);
+    if (tradeOrReceive && response) {
+      setTrades(trades.push(response));
+      setButtonPopUpTrade(false);
+      setTradeUserInput("");
+      console.log("trade List" + trades);
     }
   };
 

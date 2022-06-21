@@ -42,6 +42,8 @@ export default function Search() {
 
     let response = await res.json();
     setSpecificCard(response);
+    console.log(response);
+    console.log(specificCard.image_uris.small);
     setButtonPopUp(true);
   };
 
@@ -94,7 +96,10 @@ export default function Search() {
               <div>
                 <h3>{specificCard.name}</h3>
                 <div>
-                  <image></image>
+                  <img
+                    className="cardImage"
+                    src={specificCard.image_uris.normal}
+                  />
                 </div>
                 <div>USD: {specificCard.prices.usd}$</div>
                 <div>Foil: {specificCard.prices.usd_foil}$</div>
