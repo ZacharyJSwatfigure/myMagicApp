@@ -20,10 +20,12 @@
 }
 
 .tradeHolder {
+  font-size: 30px;
   width: 500px;
   background-color: black;
-  padding: 25px;
   margin: 20px;
+  color: white;
+  text-decoration: underline;
 }
 
 .cardListOl {
@@ -45,4 +47,12 @@
   border-radius: 20px;
   padding: 10px;
   color: white;
+}
+
+.spacer {
+  border: 1px solid yellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

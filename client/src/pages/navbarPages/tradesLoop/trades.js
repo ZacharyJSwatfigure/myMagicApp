@@ -8,8 +8,8 @@ export default function Trade() {
   const [tradeOrReceive, setTradeOrReceive] = useState(true);
   const [trades, setTrades] = useState([]);
   const [receive, setReceive] = useState([]);
+  const [newCard, setNewCard] = useState("");
   const [tradeUserInput, setTradeUserInput] = useState("");
-  const [specificCard, setSpecificCard] = useState(null);
   const [buttonPopUpTrade, setButtonPopUpTrade] = useState(false);
 
   const addACard = () => {
@@ -37,16 +37,15 @@ export default function Trade() {
 
   //trying to fgure out how to push to a list
 
-  const tradeSearchCard = async (cardName) => {
-    let res = await fetch(
-      `https://api.scryfall.com/cards/named?exact=${cardName}`
-    );
+  const tradeSearchCard = async () => {
+    let card = newCard;
+    let res = await fetch(`https://api.scryfall.com/cards/named?exact=${card}`);
     let response = await res.json();
     if (tradeOrReceive && response) {
+      console.log("response from exact  " + response);
       setTrades(trades.push(response));
+      console.log(trades);
       setButtonPopUpTrade(false);
-      setTradeUserInput("");
-      console.log("trade List" + trades);
     }
   };
 
@@ -54,7 +53,7 @@ export default function Trade() {
     <section className="allHolderLRG">
       <section className="allHolder">
         <section className="tradeHolder">
-          <div>
+          <div className="spacer">
             <h1>Trade Away</h1>
             <div>
               <button
@@ -69,7 +68,7 @@ export default function Trade() {
           </div>
         </section>
         <section className="tradeHolder">
-          <div>
+          <div className="spacer">
             <h1>Receiving</h1>
             <div>
               <button>add card?</button>
@@ -95,7 +94,8 @@ export default function Trade() {
                     key={index}
                     value={trade}
                     onClick={() => {
-                      tradeSearchCard(trade);
+                      setNewCard(trade);
+                      tradeSearchCard();
                     }}
                   >
                     <section>
