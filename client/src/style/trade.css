@@ -1,10 +1,11 @@
 
 
 .allHolderLRG {
-  width: 500px;
-  height: 500px;
-  background-image: blue;
+  width: 800px;
+  height: 100%;
+  background-color: blue;
   margin-top: 10%;
+  margin-bottom: 10%
 }
 
 .allHolder {
@@ -12,7 +13,7 @@
   flex-direction: row;
   
   justify-content: center;
-
+  
   width: 100%;
   height: 100%;
   background-color: red;
@@ -20,12 +21,13 @@
 }
 
 .tradeHolder {
-  font-size: 30px;
-  width: 500px;
+  font-size: 16px;
+  width: 80%;
+  height: 80%;
   background-color: black;
   margin: 20px;
   color: white;
-  text-decoration: underline;
+  
 }
 
 .cardListOl {
@@ -37,7 +39,7 @@
   margin: 0 auto;
 }
 
-.tradeListItem {
+.fuzzyListItem {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,6 +50,10 @@
   padding: 10px;
   color: white;
 }
+.fuzzyListItem:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 100px rgb(42, 129, 57);
+}
 
 .spacer {
   border: 1px solid yellow;
@@ -55,4 +61,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.holdingSelected {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.selectedTrades {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 20px;
+}
+.tradeItem {
+  padding: 10px;
+  
 }

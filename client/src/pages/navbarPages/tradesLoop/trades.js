@@ -1,52 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TradePopUp from "./tradePopup";
 import "../../../style/trade.css";
 
 export default function Trade() {
-  //if tradeOrReceive is true it's the user's trade
-  //if tradeOrReceive is false it's the user's receive
+  //Determiones wether selected card is going to tradse or receieve list
   const [tradeOrReceive, setTradeOrReceive] = useState(true);
-  const [trades, setTrades] = useState([]);
-  const [receive, setReceive] = useState([]);
-  const [newCard, setNewCard] = useState("");
-  const [tradeUserInput, setTradeUserInput] = useState("");
+
+  //List of cards being traded away
+  const [tradeAwayList, setTradeAwayList] = useState([]);
+
+  //List of cards being received
+  const [receivingList, setReceivingList] = useState([]);
+
+  //Determines wether the search popup is active or not
   const [buttonPopUpTrade, setButtonPopUpTrade] = useState(false);
 
-  const addACard = () => {
-    setButtonPopUpTrade(true);
-  };
+  //This is the user input for the initial "fuzzy" search
+  const [tradeUserInput, setTradeUserInput] = useState("");
 
+  //this is the list that we get back from the fuzzy search
+  const [fuzzyList, setFuzzyList] = useState([]);
+
+  //This is the cards name taken from the initial "fuzzy" search
+  const [exactCard, setExactCard] = useState("");
+
+  //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
     setTradeUserInput(e.target.value);
-    console.log(e.target.value);
   };
 
-  const handleTradeSearch = async () => {
-    let res = await fetch(
+  //Searches the api for the user input. "fuzzy"
+  const handleFuzzySearch = async () => {
+    let fuzzy = await fetch(
       `https://api.scryfall.com/cards/autocomplete?q=${tradeUserInput}`
     );
-
-    if (res.status !== 200) {
-      console.error("Something went wrong! Try again later.");
-      setTrades([]);
-      return;
+    if (fuzzy.status !== 200) {
+      alert("Something went wrong! Try again later.");
+      setTradeUserInput("");
     }
-    let response = await res.json();
-    setTrades(response.data);
+    let response = await fuzzy.json();
+    setFuzzyList(response.data);
+    console.log(fuzzyList);
   };
 
-  //trying to fgure out how to push to a list
-
-  const tradeSearchCard = async () => {
-    let card = newCard;
-    let res = await fetch(`https://api.scryfall.com/cards/named?exact=${card}`);
-    let response = await res.json();
-    if (tradeOrReceive && response) {
-      console.log("response from exact  " + response);
-      setTrades(trades.push(response));
-      console.log(trades);
-      setButtonPopUpTrade(false);
+  //When the user finds the exact card that they want they click it and it adds to the list
+  const addExactCard = async () => {
+    let exactCardSearch = await fetch(
+      `https://api.scryfall.com/cards/named?exact=${exactCard}`
+    );
+    if (exactCardSearch.status !== 200) {
+      alert("Something went wrong! Try again later.");
+      return;
     }
+    let newCard = await exactCardSearch.json();
+    if (tradeOrReceive) {
+      let list = tradeAwayList;
+      list.push(newCard);
+      setTradeAwayList(list);
+      console.log(tradeAwayList);
+    }
+    setButtonPopUpTrade(false);
   };
 
   return (
@@ -56,13 +69,27 @@ export default function Trade() {
           <div className="spacer">
             <h1>Trade Away</h1>
             <div>
+              {tradeAwayList.length >= 1 ? (
+                <ol className="holdingSelected">
+                  {tradeAwayList.map((card, index) => {
+                    return (
+                      <li className="selectedTrades" key={index}>
+                        <h1 className="tradeItem">{card.name} -- </h1>
+                        <h1 className="tradeItem">{card.prices.usd}</h1>
+                      </li>
+                    );
+                  })}
+                </ol>
+              ) : (
+                <p></p>
+              )}
               <button
                 onClick={() => {
-                  addACard();
                   setTradeOrReceive(true);
+                  setButtonPopUpTrade(true);
                 }}
               >
-                add card?
+                Add a card?
               </button>
             </div>
           </div>
@@ -71,7 +98,14 @@ export default function Trade() {
           <div className="spacer">
             <h1>Receiving</h1>
             <div>
-              <button>add card?</button>
+              <button
+                onClick={() => {
+                  setTradeOrReceive(false);
+                  setButtonPopUpTrade(true);
+                }}
+              >
+                Add a card?
+              </button>
             </div>
           </div>
         </section>
@@ -84,22 +118,29 @@ export default function Trade() {
             onChange={handleUserChange}
             placeholder="Card Name"
           ></input>
-          <button onClick={handleTradeSearch}>search</button>
-          {trades.length >= 0 ? (
+          <button
+            onClick={() => {
+              handleFuzzySearch();
+            }}
+          >
+            search
+          </button>
+          {fuzzyList.length >= 0 ? (
             <ol className="cardListOl">
-              {trades.map((trade, index) => {
+              {fuzzyList.map((cardName, index) => {
                 return (
                   <li
-                    className="tradeListItem"
                     key={index}
-                    value={trade}
+                    value={cardName}
                     onClick={() => {
-                      setNewCard(trade);
-                      tradeSearchCard();
+                      setExactCard(cardName);
+                      console.log("clicked on card  " + cardName);
+                      console.log("current value of variable  " + exactCard);
+                      addExactCard();
                     }}
                   >
-                    <section>
-                      <p>{trade}</p>
+                    <section className="fuzzyListItem">
+                      <p>{cardName}</p>
                     </section>
                   </li>
                 );
