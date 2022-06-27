@@ -141,10 +141,13 @@ export default function Trade() {
                     key={index}
                     value={cardName}
                     onClick={() => {
-                      setExactCard(cardName);
-                      console.log("clicked on card  " + cardName);
-                      console.log("current value of variable  " + exactCard);
-                      addExactCard();
+                      if (cardName === exactCard) {
+                        addExactCard();
+                      } else {
+                        return alert(
+                          exactCard + "and" + cardName + " dont match"
+                        );
+                      }
                     }}
                   >
                     <section className="fuzzyListItem">
