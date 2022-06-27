@@ -29,6 +29,12 @@ export default function Trade() {
     setTradeUserInput(e.target.value);
   };
 
+  useEffect(() => {
+    console.log("use effect ran");
+    console.log(exactCard);
+    setExactCard(exactCard);
+  }, [exactCard]);
+
   //Searches the api for the user input. "fuzzy"
   const handleFuzzySearch = async () => {
     let fuzzy = await fetch(
@@ -45,8 +51,10 @@ export default function Trade() {
 
   //When the user finds the exact card that they want they click it and it adds to the list
   const addExactCard = async () => {
+    setExactCard(exactCard);
+    let selectedCard = exactCard;
     let exactCardSearch = await fetch(
-      `https://api.scryfall.com/cards/named?exact=${exactCard}`
+      `https://api.scryfall.com/cards/named?exact=${selectedCard}`
     );
     if (exactCardSearch.status !== 200) {
       alert("Something went wrong! Try again later.");
