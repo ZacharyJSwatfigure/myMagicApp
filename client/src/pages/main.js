@@ -24,6 +24,9 @@ function MainPage() {
     if (currentPage === "Trades") {
       return <Trades />;
     }
+    if (currentPage === "Login") {
+      return <Login />;
+    }
   };
 
   const handlePageChange = (page) => setCurrentPage(page);

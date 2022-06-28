@@ -51,13 +51,11 @@ export default function Trade() {
 
   //When the user finds the exact card that they want they click it and it adds to the list
   const addExactCard = async () => {
-    setExactCard(exactCard);
-    let selectedCard = exactCard;
     let exactCardSearch = await fetch(
-      `https://api.scryfall.com/cards/named?exact=${selectedCard}`
+      `https://api.scryfall.com/cards/named?exact=${exactCard}`
     );
     if (exactCardSearch.status !== 200) {
-      alert("Something went wrong! Try again later.");
+      alert("Something went wrong! Try again later. Error with API");
       return;
     }
     let newCard = await exactCardSearch.json();
@@ -141,13 +139,8 @@ export default function Trade() {
                     key={index}
                     value={cardName}
                     onClick={() => {
-                      if (cardName === exactCard) {
-                        addExactCard();
-                      } else {
-                        return alert(
-                          exactCard + "and" + cardName + " dont match"
-                        );
-                      }
+                      setExactCard(cardName);
+                      addExactCard();
                     }}
                   >
                     <section className="fuzzyListItem">
