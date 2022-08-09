@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TradePopUp from "./tradePopup";
 import "../../../style/trade.css";
-import MagPopUp from "./magnifyPop";
 
 export default function Trade() {
   //Determiones wether selected card is going to tradse or receieve list
@@ -16,9 +15,6 @@ export default function Trade() {
   //Determines wether the search popup is active or not
   const [buttonPopUpTrade, setButtonPopUpTrade] = useState(false);
 
-  //Determines wether the magnify popup is active or not
-  const [magnifyPopUpTrade, setMagnifyPopUpTrade] = useState(false);
-
   //This is the user input for the initial "fuzzy" search
   const [tradeUserInput, setTradeUserInput] = useState("");
 
@@ -26,12 +22,18 @@ export default function Trade() {
   const [fuzzyList, setFuzzyList] = useState([]);
 
   //This is the cards name taken from the initial "fuzzy" search
-  const [magnifiedCard, setMagnifiedCard] = useState("");
+  const [exactCard, setExactCard] = useState("");
 
   //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
     setTradeUserInput(e.target.value);
   };
+
+  useEffect(() => {
+    console.log("use effect ran");
+    console.log(exactCard);
+    setExactCard(exactCard);
+  }, [exactCard]);
 
   //Searches the api for the user input. "fuzzy"
   const handleFuzzySearch = async () => {
@@ -47,35 +49,25 @@ export default function Trade() {
     console.log(fuzzyList);
   };
 
-  const addFuzzyCard = (card) => {
-    if (!card) {
-      return alert("Fuzzy cards");
-    }
-    if (tradeOrReceive) {
-      let list = tradeAwayList;
-      list.push(card);
-      setTradeAwayList(list);
-      console.log(tradeAwayList);
-    } else if (!tradeOrReceive) {
-      let list = receivingList;
-      list.push(card);
-      setReceivingList(list);
-      console.log(receivingList);
-    }
-  };
-
-  const magnifyCard = async (card) => {
-    let magnify = await fetch(
-      `https://api.scryfall.com/cards/named?exact=${card}`
+  // When the user finds the exact card that they want they click it and it adds to the list
+  const addExactCard = async () => {
+    let exactCardSearch = await fetch(
+      `https://api.scryfall.com/cards/named?exact=${exactCard}`
     );
-    if (magnify.status !== 200) {
+    if (exactCardSearch.status !== 200) {
       alert(
-        "Something went wrong! Try again later. Error with API --magnify--"
+        "Something went wrong! Try again later. Error with API --exactCardSearch--"
       );
       return;
     }
-    let magRes = await magnify.json();
-    console.log(magRes.name);
+    let newCard = await exactCardSearch.json();
+    if (tradeOrReceive) {
+      let list = tradeAwayList;
+      list.push(newCard);
+      setTradeAwayList(list);
+      console.log(tradeAwayList);
+    }
+    setButtonPopUpTrade(false);
   };
 
   return (
@@ -90,15 +82,8 @@ export default function Trade() {
                   {tradeAwayList.map((card, index) => {
                     return (
                       <li className="selectedTrades" key={index}>
-                        <h1
-                          className="tradeItem"
-                          value={card}
-                          onClick={() => {
-                            magnifyCard(card);
-                          }}
-                        >
-                          {card}
-                        </h1>
+                        <h1 className="tradeItem">{card.name} -- </h1>
+                        <h1 className="tradeItem">{card.prices.usd}</h1>
                       </li>
                     );
                   })}
@@ -156,8 +141,8 @@ export default function Trade() {
                     key={index}
                     value={cardName}
                     onClick={() => {
-                      addFuzzyCard(cardName);
-                      setButtonPopUpTrade(false);
+                      setExactCard(cardName);
+                      addExactCard();
                     }}
                   >
                     <section className="fuzzyListItem">
@@ -172,9 +157,6 @@ export default function Trade() {
           )}
         </section>
       </TradePopUp>
-      <MagPopUp trigger={magnifyPopUpTrade} setTrigger={setMagnifyPopUpTrade}>
-        <h1>helloooo world</h1>
-      </MagPopUp>
     </section>
   );
 }
