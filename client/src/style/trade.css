@@ -79,3 +79,26 @@
   padding: 10px;
   
 }
+
+.magPopBackground {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  padding: 10px;
+  background-color: black;
+}
+
+.magPopName {
+  font-size: 18px;
+  color: white;
+}
+
+.magPopCardInfo {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  margin: 2%;
+
+}

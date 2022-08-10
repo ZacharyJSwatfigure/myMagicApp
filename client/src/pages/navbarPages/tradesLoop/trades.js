@@ -25,8 +25,8 @@ export default function Trade() {
   //this is the list that we get back from the fuzzy search
   const [fuzzyList, setFuzzyList] = useState([]);
 
-  //This is the cards name taken from the initial "fuzzy" search
-  const [magnifiedCard, setMagnifiedCard] = useState("");
+  //This is the card being magnified. Info from api call gets pushed here when a new card gets clicked
+  const [magnifiedCard, setMagnifiedCard] = useState({});
 
   //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
@@ -74,8 +74,11 @@ export default function Trade() {
       );
       return;
     }
-    let magRes = await magnify.json();
-    console.log(magRes.name);
+
+    let response = await magnify.json();
+    setMagnifiedCard(response);
+    console.log(magnifiedCard);
+    setMagnifyPopUpTrade(true);
   };
 
   return (
@@ -173,7 +176,26 @@ export default function Trade() {
         </section>
       </TradePopUp>
       <MagPopUp trigger={magnifyPopUpTrade} setTrigger={setMagnifyPopUpTrade}>
-        <h1>helloooo world</h1>
+        <section className="magPopBackground">
+          <h1 className="magPopName">{magnifiedCard.name}</h1>
+          <div className="magPopCardInfo">
+            <section>
+              <h1>USD: {magnifiedCard.prices.usd}$</h1>
+              <h1>Foil: {magnifiedCard.prices.usd_foil}$</h1>
+              <h1>
+                Go Buy It!
+                {() => {
+                  magnifiedCard.purchase_uris.map((uris, index) => {
+                    return <a key={index} href={uris}></a>;
+                  });
+                }}
+              </h1>
+            </section>
+            <div>
+              <h1></h1>
+            </div>
+          </div>
+        </section>
       </MagPopUp>
     </section>
   );
