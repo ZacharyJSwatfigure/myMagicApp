@@ -72,10 +72,8 @@ export default function Trade() {
         return response.json();
       })
       .then((data) => {
-        //console.log(data);
         setMagnifyPopUpTrade(true);
         setMagnifiedCard(data);
-        console.log(magnifiedCard);
       });
   }
   // const magnifyCard = async (card) => {
@@ -196,7 +194,6 @@ export default function Trade() {
             <h1 className='magPopName'>{magnifiedCard.name}</h1>
             <div className='magPopCardInfo'>
               <section>
-                {console.log(magnifiedCard.prices && magnifiedCard.prices.usd)}
                 <h1>
                   USD: {magnifiedCard.prices && magnifiedCard.prices.usd}$
                 </h1>
@@ -207,8 +204,10 @@ export default function Trade() {
                   Go Buy It!
                   {/* you stopped here working on magnified cards go buy it link */}
                   {() => {
-                    magnifiedCard.purchase_uris.map((uris, index) => {
-                      return <a key={index} href={uris}></a>;
+                    magnifiedCard.pruchase_uris.map((uris, index) => {
+                      <a key={index} href={uris}>
+                        Click me
+                      </a>;
                     });
                   }}
                 </h1>
