@@ -28,6 +28,8 @@ export default function Trade() {
   //This is the card being magnified. Info from api call gets pushed here when a new card gets clicked
   const [magnifiedCard, setMagnifiedCard] = useState({});
 
+  const [isCard, setIsCard] = useState(false);
+
   //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
     setTradeUserInput(e.target.value);
@@ -74,11 +76,11 @@ export default function Trade() {
       );
       return;
     }
-
     let response = await magnify.json();
-    setMagnifiedCard(response);
+
     console.log(magnifiedCard);
     setMagnifyPopUpTrade(true);
+    return setMagnifiedCard(response);
   };
 
   return (
@@ -98,6 +100,7 @@ export default function Trade() {
                           value={card}
                           onClick={() => {
                             magnifyCard(card);
+                            setIsCard(true);
                           }}
                         >
                           {card}
@@ -176,7 +179,7 @@ export default function Trade() {
         </section>
       </TradePopUp>
       <MagPopUp trigger={magnifyPopUpTrade} setTrigger={setMagnifyPopUpTrade}>
-        {magnifiedCard.length >= 0 ? (
+        {isCard ? (
           <section className="magPopBackground">
             <h1 className="magPopName">{magnifiedCard.name}</h1>
             <div className="magPopCardInfo">
@@ -199,7 +202,7 @@ export default function Trade() {
             </div>
           </section>
         ) : (
-          <h1></h1>
+          <h1>error</h1>
         )}
       </MagPopUp>
     </section>
