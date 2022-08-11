@@ -28,7 +28,21 @@ export default function Trade() {
   //This is the card being magnified. Info from api call gets pushed here when a new card gets clicked
   const [magnifiedCard, setMagnifiedCard] = useState({});
 
+  // trying to help with the conditional rendering
   const [isCard, setIsCard] = useState(false);
+
+  //this is the value of all the cards in the trade queue
+  const [tradeValue, setTradeValue] = useState(0);
+  //this is the value of all the cards in the receive queue
+  const [receieveValue, setReceieveValue] = useState(0);
+  //this is the total value of all the cards being traded
+  const [total, setTotal] = useState(0);
+
+  // useEffect(() => {
+  //   updateTradeValue();
+  //   updateReceiveValue();
+  //   updateTotalValue();
+  // }, [tradeAwayList, receivingList]);
 
   //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
@@ -66,21 +80,30 @@ export default function Trade() {
     }
   };
 
+  //everytime the trade away and reveive list it updated update the value of all the cards in the both queues
+  const addCardValued = () => {};
+
   const magnifyCard = async (card) => {
     let magnify = await fetch(
       `https://api.scryfall.com/cards/named?exact=${card}`
-    );
+    )
     if (magnify.status !== 200) {
       alert(
         "Something went wrong! Try again later. Error with API --magnify--"
       );
       return;
+    } else {
+      then(onFullfilled) {
+        setMagInfo(magnify);
+      };
+  };
     }
-    let response = await magnify.json();
+      
 
+  const setMagInfo = async (magnify) => {
+    let response = await magnify.json();
     console.log(magnifiedCard);
-    setMagnifyPopUpTrade(true);
-    return setMagnifiedCard(response);
+    setMagnifiedCard(response);
   };
 
   return (
@@ -178,33 +201,6 @@ export default function Trade() {
           )}
         </section>
       </TradePopUp>
-      <MagPopUp trigger={magnifyPopUpTrade} setTrigger={setMagnifyPopUpTrade}>
-        {isCard ? (
-          <section className="magPopBackground">
-            <h1 className="magPopName">{magnifiedCard.name}</h1>
-            <div className="magPopCardInfo">
-              <section>
-                <h1>USD: {magnifiedCard.prices.usd}$</h1>
-                <h1>Foil: {magnifiedCard.prices.usd_foil}$</h1>
-                <h1>
-                  Go Buy It!
-                  {/* you stopped here working on magnified cards go buy it link */}
-                  {() => {
-                    magnifiedCard.purchase_uris.map((uris, index) => {
-                      return <a key={index} href={uris}></a>;
-                    });
-                  }}
-                </h1>
-              </section>
-              <div>
-                <h1></h1>
-              </div>
-            </div>
-          </section>
-        ) : (
-          <h1>error</h1>
-        )}
-      </MagPopUp>
     </section>
   );
 }
