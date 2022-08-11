@@ -176,26 +176,31 @@ export default function Trade() {
         </section>
       </TradePopUp>
       <MagPopUp trigger={magnifyPopUpTrade} setTrigger={setMagnifyPopUpTrade}>
-        <section className="magPopBackground">
-          <h1 className="magPopName">{magnifiedCard.name}</h1>
-          <div className="magPopCardInfo">
-            <section>
-              <h1>USD: {magnifiedCard.prices.usd}$</h1>
-              <h1>Foil: {magnifiedCard.prices.usd_foil}$</h1>
-              <h1>
-                Go Buy It!
-                {() => {
-                  magnifiedCard.purchase_uris.map((uris, index) => {
-                    return <a key={index} href={uris}></a>;
-                  });
-                }}
-              </h1>
-            </section>
-            <div>
-              <h1></h1>
+        {magnifiedCard.length >= 0 ? (
+          <section className="magPopBackground">
+            <h1 className="magPopName">{magnifiedCard.name}</h1>
+            <div className="magPopCardInfo">
+              <section>
+                <h1>USD: {magnifiedCard.prices.usd}$</h1>
+                <h1>Foil: {magnifiedCard.prices.usd_foil}$</h1>
+                <h1>
+                  Go Buy It!
+                  {/* you stopped here working on magnified cards go buy it link */}
+                  {() => {
+                    magnifiedCard.purchase_uris.map((uris, index) => {
+                      return <a key={index} href={uris}></a>;
+                    });
+                  }}
+                </h1>
+              </section>
+              <div>
+                <h1></h1>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <h1></h1>
+        )}
       </MagPopUp>
     </section>
   );
