@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import TradePopUp from "./tradePopup";
-import "../../../style/trade.css";
-import MagPopUp from "./magnifyPop";
+import React, { useState, useEffect } from 'react';
+import TradePopUp from './tradePopup';
+import '../../../style/trade.css';
+import MagPopUp from './magnifyPop';
 
 export default function Trade() {
   //Determiones wether selected card is going to tradse or receieve list
@@ -20,7 +20,7 @@ export default function Trade() {
   const [magnifyPopUpTrade, setMagnifyPopUpTrade] = useState(false);
 
   //This is the user input for the initial "fuzzy" search
-  const [tradeUserInput, setTradeUserInput] = useState("");
+  const [tradeUserInput, setTradeUserInput] = useState('');
 
   //this is the list that we get back from the fuzzy search
   const [fuzzyList, setFuzzyList] = useState([]);
@@ -28,21 +28,7 @@ export default function Trade() {
   //This is the card being magnified. Info from api call gets pushed here when a new card gets clicked
   const [magnifiedCard, setMagnifiedCard] = useState({});
 
-  // trying to help with the conditional rendering
   const [isCard, setIsCard] = useState(false);
-
-  //this is the value of all the cards in the trade queue
-  const [tradeValue, setTradeValue] = useState(0);
-  //this is the value of all the cards in the receive queue
-  const [receieveValue, setReceieveValue] = useState(0);
-  //this is the total value of all the cards being traded
-  const [total, setTotal] = useState(0);
-
-  // useEffect(() => {
-  //   updateTradeValue();
-  //   updateReceiveValue();
-  //   updateTotalValue();
-  // }, [tradeAwayList, receivingList]);
 
   //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
@@ -55,8 +41,8 @@ export default function Trade() {
       `https://api.scryfall.com/cards/autocomplete?q=${tradeUserInput}`
     );
     if (fuzzy.status !== 200) {
-      alert("Something went wrong! Try again later. --fuzzySearch--");
-      setTradeUserInput("");
+      alert('Something went wrong! Try again later. --fuzzySearch--');
+      setTradeUserInput('');
     }
     let response = await fuzzy.json();
     setFuzzyList(response.data);
@@ -65,7 +51,7 @@ export default function Trade() {
 
   const addFuzzyCard = (card) => {
     if (!card) {
-      return alert("Fuzzy cards");
+      return alert('Fuzzy cards');
     }
     if (tradeOrReceive) {
       let list = tradeAwayList;
@@ -80,32 +66,13 @@ export default function Trade() {
     }
   };
 
-  //everytime the trade away and reveive list it updated update the value of all the cards in the both queues
-  const addCardValued = () => {};
-
-  const magnifyCard = async (card) => {
-    let magnify = await fetch(
-      `https://api.scryfall.com/cards/named?exact=${card}`
-    )
-    if (magnify.status !== 200) {
-      alert(
-        "Something went wrong! Try again later. Error with API --magnify--"
-      );
-      return;
-    } else {
-      .then(() => {
-        if (magnify.status !== 200) {
-          alert(
-            "Something went wrong! Try again later. Error with API --magnify--"
-          );
-          return;
-        }
+  async function magnifyCard(card) {
+    await fetch(`https://api.scryfall.com/cards/named?exact=${card}`)
+      .then((response) => {
+        return response.json();
       })
-      .then(() => {
-        setMagInfo(magnify);
-      })
-
       .then((data) => {
+        //console.log(data);
         setMagnifyPopUpTrade(true);
         setMagnifiedCard(data);
       });
@@ -128,19 +95,19 @@ export default function Trade() {
   // };
 
   return (
-    <section className="allHolderLRG">
-      <section className="allHolder">
-        <section className="tradeHolder">
-          <div className="spacer">
+    <section className='allHolderLRG'>
+      <section className='allHolder'>
+        <section className='tradeHolder'>
+          <div className='spacer'>
             <h1>Trade Away</h1>
             <div>
               {tradeAwayList.length >= 1 ? (
-                <ol className="holdingSelected">
+                <ol className='holdingSelected'>
                   {tradeAwayList.map((card, index) => {
                     return (
-                      <li className="selectedTrades" key={index}>
+                      <li className='selectedTrades' key={index}>
                         <h1
-                          className="tradeItem"
+                          className='tradeItem'
                           value={card}
                           onClick={() => {
                             magnifyCard(card);
@@ -167,8 +134,8 @@ export default function Trade() {
             </div>
           </div>
         </section>
-        <section className="tradeHolder">
-          <div className="spacer">
+        <section className='tradeHolder'>
+          <div className='spacer'>
             <h1>Receiving</h1>
             <div>
               <button
@@ -185,11 +152,11 @@ export default function Trade() {
       </section>
 
       <TradePopUp trigger={buttonPopUpTrade} setTrigger={setButtonPopUpTrade}>
-        <section className="tradeHolder">
+        <section className='tradeHolder'>
           <input
             value={tradeUserInput}
             onChange={handleUserChange}
-            placeholder="Card Name"
+            placeholder='Card Name'
           ></input>
           <button
             onClick={() => {
@@ -199,7 +166,7 @@ export default function Trade() {
             search
           </button>
           {fuzzyList.length >= 0 ? (
-            <ol className="cardListOl">
+            <ol className='cardListOl'>
               {fuzzyList.map((cardName, index) => {
                 return (
                   <li
@@ -210,7 +177,7 @@ export default function Trade() {
                       setButtonPopUpTrade(false);
                     }}
                   >
-                    <section className="fuzzyListItem">
+                    <section className='fuzzyListItem'>
                       <p>{cardName}</p>
                     </section>
                   </li>
@@ -228,6 +195,7 @@ export default function Trade() {
             <h1 className='magPopName'>{magnifiedCard.name}</h1>
             <div className='magPopCardInfo'>
               <section>
+                {console.log(magnifiedCard.prices && magnifiedCard.prices.usd)}
                 <h1>
                   USD: {magnifiedCard.prices && magnifiedCard.prices.usd}$
                 </h1>
@@ -238,10 +206,8 @@ export default function Trade() {
                   Go Buy It!
                   {/* you stopped here working on magnified cards go buy it link */}
                   {() => {
-                    magnifiedCard.pruchase_uris.map((uris, index) => {
-                      <a key={index} href={uris}>
-                        Click me
-                      </a>;
+                    magnifiedCard.purchase_uris.map((uris, index) => {
+                      return <a key={index} href={uris}></a>;
                     });
                   }}
                 </h1>
@@ -255,7 +221,6 @@ export default function Trade() {
           <h1>error</h1>
         )}
       </MagPopUp>
-
     </section>
   );
 }
