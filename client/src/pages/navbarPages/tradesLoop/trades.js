@@ -104,22 +104,28 @@ export default function Trade() {
       .then(() => {
         setMagInfo(magnify);
       })
-      .then(() => {
-        console.log("tryin to magnify");
-      })
-      .then(() => {
-        setMagnifyPopUpTrade(true);
-      })
-      .catch((error) => console.log(error));
-  };
-    }
-      
 
-  const setMagInfo = async (magnify) => {
-    let response = await magnify.json();
-    console.log(magnifiedCard);
-    setMagnifiedCard(response);
-  };
+      .then((data) => {
+        setMagnifyPopUpTrade(true);
+        setMagnifiedCard(data);
+      });
+  }
+  // const magnifyCard = async (card) => {
+  //   let magnify = await fetch(
+  //     `https://api.scryfall.com/cards/named?exact=${card}`
+  //   );
+  //   if (magnify.status !== 200) {
+  //     alert(
+  //       'Something went wrong! Try again later. Error with API --magnify--'
+  //     );
+  //     return;
+  //   }
+  //   let response = await magnify.json();
+
+  //   console.log(magnifiedCard);
+  //   setMagnifyPopUpTrade(true);
+  //   return setMagnifiedCard(response);
+  // };
 
   return (
     <section className="allHolderLRG">
@@ -216,6 +222,40 @@ export default function Trade() {
           )}
         </section>
       </TradePopUp>
+      <MagPopUp trigger={magnifyPopUpTrade} setTrigger={setMagnifyPopUpTrade}>
+        {isCard ? (
+          <section className='magPopBackground'>
+            <h1 className='magPopName'>{magnifiedCard.name}</h1>
+            <div className='magPopCardInfo'>
+              <section>
+                <h1>
+                  USD: {magnifiedCard.prices && magnifiedCard.prices.usd}$
+                </h1>
+                <h1>
+                  Foil: {magnifiedCard.prices && magnifiedCard.prices.usd_foil}$
+                </h1>
+                <h1>
+                  Go Buy It!
+                  {/* you stopped here working on magnified cards go buy it link */}
+                  {() => {
+                    magnifiedCard.pruchase_uris.map((uris, index) => {
+                      <a key={index} href={uris}>
+                        Click me
+                      </a>;
+                    });
+                  }}
+                </h1>
+              </section>
+              <div>
+                <h1></h1>
+              </div>
+            </div>
+          </section>
+        ) : (
+          <h1>error</h1>
+        )}
+      </MagPopUp>
+
     </section>
   );
 }
