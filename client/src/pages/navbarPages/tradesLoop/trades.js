@@ -30,7 +30,13 @@ export default function Trade() {
 
   const [isCard, setIsCard] = useState(false);
 
+  // All stuff Zach is working on below --->
+  //This is the total value of trades
   const [tradeValue, setTradeValue] = useState(0);
+  //This is total of trade away
+  const [tradeAwayValue, setTradeAwayValue] = useState(0);
+  //This is the total of receiving value
+  const [receivingValue, setReceivingValue] = useState(0);
 
   //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
@@ -42,7 +48,25 @@ export default function Trade() {
   }, [tradeAwayList]);
 
   //this will be the function that changes the value of a;; the cards
-  const handleValues = () => {};
+  const handleValues = () => {
+    handleTradeValue();
+    handleRecivingValue();
+    handleTotalValue();
+  };
+
+  const handleTradeValue = async () => {
+    let trades = tradeAwayList.map((tr) => {
+      console.log(tr);
+    });
+  };
+
+  const handleRecivingValue = async () => {
+    console.log("receiving triggered");
+  };
+
+  const handleTotalValue = () => {
+    console.log("total triggered");
+  };
 
   //Searches the api for the user input. "fuzzy"
   const handleFuzzySearch = async () => {
