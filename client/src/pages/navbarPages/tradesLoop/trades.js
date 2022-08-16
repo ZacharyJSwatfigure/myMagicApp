@@ -45,6 +45,7 @@ export default function Trade() {
 
   useEffect(() => {
     console.log("useEffect Triggered");
+    handleValues();
   }, [tradeAwayList]);
 
   //this will be the function that changes the value of a;; the cards
@@ -55,8 +56,8 @@ export default function Trade() {
   };
 
   const handleTradeValue = async () => {
-    let trades = tradeAwayList.map((tr) => {
-      console.log(tr);
+    let trades = tradeAwayList.map((card) => {
+      console.log(card + "     ----->    handling  trade");
     });
   };
 
