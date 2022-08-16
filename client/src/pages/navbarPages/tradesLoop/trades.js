@@ -30,10 +30,19 @@ export default function Trade() {
 
   const [isCard, setIsCard] = useState(false);
 
+  const [tradeValue, setTradeValue] = useState(0);
+
   //makes sure that the user input is being updated when entered
   const handleUserChange = (e) => {
     setTradeUserInput(e.target.value);
   };
+
+  useEffect(() => {
+    console.log("useEffect Triggered");
+  }, [tradeAwayList]);
+
+  //this will be the function that changes the value of a;; the cards
+  const handleValues = () => {};
 
   //Searches the api for the user input. "fuzzy"
   const handleFuzzySearch = async () => {
@@ -240,9 +249,15 @@ export default function Trade() {
             </div>
           </section>
         ) : (
-          <h1>error</h1>
+          <h1>error with render</h1>
         )}
       </MagPopUp>
+
+      <section>
+        <div>
+          <p>Total trade value: </p>
+        </div>
+      </section>
     </section>
   );
 }
