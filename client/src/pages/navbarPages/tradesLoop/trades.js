@@ -45,6 +45,7 @@ export default function Trade() {
 
   useEffect(() => {
     console.log("useEffect Triggered");
+    handleValues();
   }, [tradeAwayList]);
 
   //this will be the function that changes the value of a;; the cards
@@ -55,15 +56,34 @@ export default function Trade() {
   };
 
   const handleTradeValue = async () => {
-    let trades = tradeAwayList.map((tr) => {
-      console.log(tr);
+    tradeAwayList.map((card) => {
+      findValue(card);
     });
   };
 
+  //this function will be ab2le to be called into trade and recive value totals with a switch ie... if false total for trade if true total for receiving
+  const findValue = async (card) => {
+    let value = await fetch(
+      `https://api.scryfall.com/cards/named?exact=${card}`
+    );
+    if (value.status !== 200) {
+      alert("somehting went wrong try again findValue()");
+      return;
+    }
+    let response = await value.json();
+    let cardV = parseFloat(response.prices.usd);
+    let old = tradeValue;
+    let newer = old + cardV;
+    console.log(newer);
+    setTradeValue(newer);
+    console.log((tradeValue = "-------> new tradeValu"));
+  };
+
+  //NOT YET
   const handleRecivingValue = async () => {
     console.log("receiving triggered");
   };
-
+  // NOT YET
   const handleTotalValue = () => {
     console.log("total triggered");
   };
