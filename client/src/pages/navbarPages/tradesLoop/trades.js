@@ -46,7 +46,7 @@ export default function Trade() {
   useEffect(() => {
     console.log("useEffect Triggered");
     handleValues();
-  }, [tradeAwayList]);
+  }, [tradeAwayList, receivingList]);
 
   //this will be the function that changes the value of a;; the cards
   const handleValues = () => {
@@ -55,12 +55,14 @@ export default function Trade() {
     handleTotalValue();
   };
 
+  //part one
   const handleTradeValue = async () => {
     tradeAwayList.map((card) => {
       findValue(card);
     });
   };
 
+  //part 2
   //this function will be ab2le to be called into trade and recive value totals with a switch ie... if false total for trade if true total for receiving
   const findValue = async (card) => {
     let value = await fetch(
@@ -70,13 +72,16 @@ export default function Trade() {
       alert("somehting went wrong try again findValue()");
       return;
     }
-    let response = await value.json();
-    let cardV = parseFloat(response.prices.usd);
-    let old = tradeValue;
-    let newer = old + cardV;
-    console.log(newer);
-    setTradeValue(newer);
-    console.log((tradeValue = "-------> new tradeValu"));
+    //part 3
+    let response = await value.json().then((response) => {
+      let cardV = parseFloat(response.prices.usd);
+      let old = parseFloat(tradeValue);
+      let newer = Number(old) + Number(cardV);
+      setTradeValue(newer);
+      console.log(tradeValue + "-------> new tradeValue");
+    });
+
+    //getting the same issue where the data load before the function can finis*
   };
 
   //NOT YET
@@ -130,22 +135,6 @@ export default function Trade() {
         setMagnifiedCard(data);
       });
   }
-  // const magnifyCard = async (card) => {
-  //   let magnify = await fetch(
-  //     `https://api.scryfall.com/cards/named?exact=${card}`
-  //   );
-  //   if (magnify.status !== 200) {
-  //     alert(
-  //       'Something went wrong! Try again later. Error with API --magnify--'
-  //     );
-  //     return;
-  //   }
-  //   let response = await magnify.json();
-
-  //   console.log(magnifiedCard);
-  //   setMagnifyPopUpTrade(true);
-  //   return setMagnifiedCard(response);
-  // };
 
   return (
     <section className="allHolderLRG">
@@ -250,6 +239,7 @@ export default function Trade() {
                     onClick={() => {
                       addFuzzyCard(cardName);
                       setButtonPopUpTrade(false);
+                      findValue(cardName);
                     }}
                   >
                     <section className="fuzzyListItem">
@@ -279,7 +269,6 @@ export default function Trade() {
                 </h1>
                 <h1>
                   Go Buy It!
-                  {/* you stopped here working on magnified cards go buy it link */}
                   {() => {
                     magnifiedCard.purchase_uris.map((uris, index) => {
                       return <a key={index} href={uris}></a>;
