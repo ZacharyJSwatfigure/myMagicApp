@@ -73,13 +73,13 @@ export default function Trade() {
       return;
     }
     //part 3
-    let response = await value.json().then((response) => {
-      let cardV = parseFloat(response.prices.usd);
-      let old = parseFloat(tradeValue);
-      let newer = Number(old) + Number(cardV);
-      setTradeValue(newer);
-      console.log(tradeValue + "-------> new tradeValue");
-    });
+    let response = await value.json();
+    let cardV = parseFloat(response.prices.usd);
+    let old = parseFloat(tradeValue);
+    let newer = Number(old) + Number(cardV);
+    // rounding the value to the nearest 100th place
+    setTradeAwayValue(Math.round(newer * 100) / 100);
+    console.log(tradeValue + "-------> new tradeValue");
 
     //getting the same issue where the data load before the function can finis*
   };
@@ -87,10 +87,12 @@ export default function Trade() {
   //NOT YET
   const handleRecivingValue = async () => {
     console.log("receiving triggered");
+    setReceivingValue(0);
   };
   // NOT YET
   const handleTotalValue = () => {
     console.log("total triggered");
+    setTradeValue(Number(tradeValue) + Number(tradeAwayValue));
   };
 
   //Searches the api for the user input. "fuzzy"
@@ -239,7 +241,7 @@ export default function Trade() {
                     onClick={() => {
                       addFuzzyCard(cardName);
                       setButtonPopUpTrade(false);
-                      findValue(cardName);
+                      handleValues();
                     }}
                   >
                     <section className="fuzzyListItem">
@@ -288,7 +290,7 @@ export default function Trade() {
 
       <section>
         <div>
-          <p>Total trade value: </p>
+          <p className="magPopName">Total trade value: {tradeValue} </p>
         </div>
       </section>
     </section>
