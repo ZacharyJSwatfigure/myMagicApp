@@ -293,7 +293,7 @@ export default function Trade() {
                             >
                               {[key]}
                             </a>
-
+                            {/* extra */}
                             <hr />
                           </div>
                         );
