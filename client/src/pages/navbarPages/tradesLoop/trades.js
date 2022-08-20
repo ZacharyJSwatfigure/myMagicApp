@@ -76,12 +76,17 @@ export default function Trade() {
 
     let response = await value.json();
     let cardV = parseFloat(response.prices.usd);
-    let old = parseFloat(tradeValue);
-    let newer = Number(old) + Number(cardV);
-    // rounding the value to the nearest 100th place
-    setTradeAwayValue(0);
-    setTradeAwayValue(Math.round(newer * 100) / 100);
-    console.log(tradeValue + "-------> new tradeValue");
+    console.log(cardV + " " + response.name);
+    let old = tradeAwayValue;
+    setTradeAwayValue(parseFloat(cardV) + parseFloat(old));
+    console.log(tradeAwayValue + " TradeAwayValue");
+
+    // let old = parseFloat(tradeValue);
+    // let newer = Number(old) + Number(cardV);
+    // // rounding the value to the nearest 100th place
+    // setTradeAwayValue(0);
+    // setTradeAwayValue;
+    // console.log(tradeValue + "-------> new tradeValue");
 
     //getting the same issue where the data load before the function can finis*
   };
@@ -309,7 +314,7 @@ export default function Trade() {
 
       <section>
         <div>
-          <p className="magPopName">Total trade value: {tradeValue} </p>
+          <p className="magPopName">Total trade value: {tradeAwayValue} </p>
         </div>
       </section>
     </section>
