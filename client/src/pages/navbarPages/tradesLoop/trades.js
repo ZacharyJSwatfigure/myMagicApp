@@ -95,6 +95,8 @@ export default function Trade() {
   const handleTotalValue = () => {
     console.log("total triggered");
     setTradeValue(Number(tradeValue) + Number(tradeAwayValue));
+
+    console.log("receiving triggered");
   };
 
   //Searches the api for the user input. "fuzzy"
@@ -273,11 +275,26 @@ export default function Trade() {
                 </h1>
                 <h1>
                   Go Buy It!
-                  {() => {
-                    magnifiedCard.purchase_uris.map((uris, index) => {
-                      return <a key={index} href={uris}></a>;
-                    });
-                  }}
+                  {console.log(magnifiedCard.purchase_uris)}
+                  {/* you stopped here working on magnified cards go buy it link */}
+                  {magnifiedCard.purchase_uris &&
+                    Object.keys(magnifiedCard.purchase_uris).map(
+                      (key, index) => {
+                        return (
+                          <div key={index}>
+                            <a
+                              href={magnifiedCard.purchase_uris[key]}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {[key]}
+                            </a>
+
+                            <hr />
+                          </div>
+                        );
+                      }
+                    )}
                 </h1>
               </section>
               <div>
