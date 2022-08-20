@@ -103,7 +103,7 @@ export default function Trade() {
 
     console.log("receiving triggered");
   };
-
+  //extra
   //Searches the api for the user input. "fuzzy"
   const handleFuzzySearch = async () => {
     let fuzzy = await fetch(
