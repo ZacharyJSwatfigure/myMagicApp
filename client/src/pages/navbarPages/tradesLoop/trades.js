@@ -80,20 +80,12 @@ export default function Trade() {
     let old = tradeAwayValue;
     setTradeAwayValue(parseFloat(cardV) + parseFloat(old));
     console.log(tradeAwayValue + " TradeAwayValue");
-
-    // let old = parseFloat(tradeValue);
-    // let newer = Number(old) + Number(cardV);
-    // // rounding the value to the nearest 100th place
-    // setTradeAwayValue(0);
-    // setTradeAwayValue;
-    // console.log(tradeValue + "-------> new tradeValue");
-
-    //getting the same issue where the data load before the function can finis*
   };
 
   //NOT YET
-  const handleRecivingValue = async () => {
+  const handleRecivingValue = async (card) => {
     console.log("receiving triggered");
+
     setReceivingValue(0);
   };
   // NOT YET
