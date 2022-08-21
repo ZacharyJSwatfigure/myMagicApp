@@ -3,7 +3,6 @@
 .allHolderLRG {
   width: 800px;
   height: 100%;
-  background-color: blue;
   margin-top: 10%;
   margin-bottom: 10%
 }
@@ -101,4 +100,26 @@
   color: white;
   margin: 2%;
 
+}
+
+.totalValueN {
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  margin: 2%;
+}
+.totalValueG {
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
+  color: green;
+  margin: 2%;
+}
+.totalValueR {
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
+  color: red;
+  margin: 2%;
 }

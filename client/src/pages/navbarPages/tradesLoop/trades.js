@@ -48,7 +48,7 @@ export default function Trade() {
     handleValues();
   }, [tradeAwayList, receivingList]);
 
-  //this will be the function that changes the value of a;; the cards
+  //this will be the function that changes the value of all the cards
   const handleValues = () => {
     handleTradeValue();
     handleRecivingValue();
@@ -82,16 +82,35 @@ export default function Trade() {
     console.log(tradeAwayValue + " TradeAwayValue");
   };
 
+  const findValueR = async (card) => {
+    let value = await fetch(
+      `https://api.scryfall.com/cards/named?exact=${card}`
+    );
+    if (value.status !== 200) {
+      alert("somehting went wrong try again findValueR()");
+      return;
+    }
+    //part 3 fetch receiving
+
+    let response = await value.json();
+    let cardV = parseFloat(response.prices.usd);
+    console.log(cardV + " " + response.name);
+    let old = receivingValue;
+    setReceivingValue(parseFloat(cardV) + parseFloat(old));
+    console.log(receivingValue + " TradeAwayValue");
+  };
+
   //NOT YET
   const handleRecivingValue = async (card) => {
     console.log("receiving triggered");
-
-    setReceivingValue(0);
+    receivingList.map((card) => {
+      findValueR(card);
+    });
   };
   // NOT YET
   const handleTotalValue = () => {
     console.log("total triggered");
-    setTradeValue(Number(tradeValue) + Number(tradeAwayValue));
+    setTradeValue(Number(tradeValue) - Number(tradeAwayValue));
 
     console.log("receiving triggered");
   };
@@ -132,7 +151,6 @@ export default function Trade() {
         return response.json();
       })
       .then((data) => {
-        //console.log(data);
         setMagnifyPopUpTrade(true);
         setMagnifiedCard(data);
       });
@@ -175,6 +193,13 @@ export default function Trade() {
               >
                 Add a card?
               </button>
+              <section>
+                <div>
+                  <p className="magPopName">
+                    Total trade value: {tradeAwayValue}{" "}
+                  </p>
+                </div>
+              </section>
             </div>
           </div>
         </section>
@@ -212,6 +237,13 @@ export default function Trade() {
               >
                 Add a card?
               </button>
+              <section>
+                <div>
+                  <p className="magPopName">
+                    Total trade value: {receivingValue}
+                  </p>
+                </div>
+              </section>
             </div>
           </div>
         </section>
@@ -305,7 +337,11 @@ export default function Trade() {
 
       <section>
         <div>
-          <p className="magPopName">Total trade value: {tradeAwayValue} </p>
+          {tradeValue >= 0 ? (
+            <p className="totalValueG">Total trade value: {tradeValue} </p>
+          ) : (
+            <p className="totalValueR">Total trade value: {tradeValue} </p>
+          )}
         </div>
       </section>
     </section>
