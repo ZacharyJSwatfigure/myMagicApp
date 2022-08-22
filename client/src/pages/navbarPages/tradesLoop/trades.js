@@ -43,30 +43,6 @@ export default function Trade() {
     setTradeUserInput(e.target.value);
   };
 
-  // useEffect(() => {
-  //   console.log("useEffect Triggered");
-  //   handleValues();
-  // }, [tradeAwayList]);
-
-  //this will be the function that changes the value of all the cards
-  const handleValues = () => {
-    setTradeAwayValue(0);
-    setReceivingValue(0);
-    setTradeValue(0);
-
-    handleTradeValue();
-    handleReceivingValue();
-    handleTotalValue();
-  };
-
-  //part one
-  const handleTradeValue = async () => {
-    tradeAwayList.map((card) => {
-      findValue(card);
-    });
-  };
-
-  //part 2
   //this function will be ab2le to be called into trade and recive value totals with a switch ie... if false total for trade if true total for receiving
   const findValue = async (card) => {
     let value = await fetch(
@@ -76,8 +52,6 @@ export default function Trade() {
       alert("somehting went wrong try again findValue()");
       return;
     }
-    //part 3
-
     let response = await value.json();
     let cardV = 0;
     if (response.prices.usd === undefined || response.prices.usd === null) {
@@ -85,11 +59,11 @@ export default function Trade() {
     } else {
       cardV = parseFloat(response.prices.usd);
     }
-
     console.log(cardV + " " + response.name);
     let old = tradeAwayValue;
     setTradeAwayValue(cardV + old);
     console.log(tradeAwayValue + " TradeAwayValue");
+    handleTotalValue();
   };
 
   const findValueR = async (card) => {
@@ -112,21 +86,19 @@ export default function Trade() {
     let old = receivingValue;
     setReceivingValue(parseFloat(cardV) + parseFloat(old));
     console.log(receivingValue + " receiving value");
-  };
-
-  const handleReceivingValue = async (card) => {
-    console.log("receiving triggered");
-    receivingList.map((card) => {
-      findValueR(card);
-    });
+    handleTotalValue();
   };
 
   const handleTotalValue = () => {
-    console.log("total triggered");
-    setTradeValue(Number(tradeValue) - Number(tradeAwayValue));
+    console.log("total triggeredddd");
+    let value = tradeAwayValue - receivingValue;
+    console.log(value + " Value");
 
-    console.log("receiving triggered");
+    setTradeValue(Math.round(value * 100) / 100);
+
+    console.log(tradeValue + " total Value");
   };
+
   //Searches the api for the user input. "fuzzy"
   const handleFuzzySearch = async () => {
     let fuzzy = await fetch(
