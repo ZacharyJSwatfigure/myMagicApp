@@ -43,15 +43,19 @@ export default function Trade() {
     setTradeUserInput(e.target.value);
   };
 
-  useEffect(() => {
-    console.log("useEffect Triggered");
-    handleValues();
-  }, [tradeAwayList, receivingList]);
+  // useEffect(() => {
+  //   console.log("useEffect Triggered");
+  //   handleValues();
+  // }, [tradeAwayList]);
 
   //this will be the function that changes the value of all the cards
   const handleValues = () => {
+    setTradeAwayValue(0);
+    setReceivingValue(0);
+    setTradeValue(0);
+
     handleTradeValue();
-    handleRecivingValue();
+    handleReceivingValue();
     handleTotalValue();
   };
 
@@ -75,10 +79,16 @@ export default function Trade() {
     //part 3
 
     let response = await value.json();
-    let cardV = parseFloat(response.prices.usd);
+    let cardV = 0;
+    if (response.prices.usd === undefined || response.prices.usd === null) {
+      cardV = 0;
+    } else {
+      cardV = parseFloat(response.prices.usd);
+    }
+
     console.log(cardV + " " + response.name);
     let old = tradeAwayValue;
-    setTradeAwayValue(parseFloat(cardV) + parseFloat(old));
+    setTradeAwayValue(cardV + old);
     console.log(tradeAwayValue + " TradeAwayValue");
   };
 
@@ -90,24 +100,27 @@ export default function Trade() {
       alert("somehting went wrong try again findValueR()");
       return;
     }
-    //part 3 fetch receiving
-
     let response = await value.json();
-    let cardV = parseFloat(response.prices.usd);
+    let cardV = 0;
+    if (response.prices.usd === undefined || response.prices.usd === null) {
+      cardV = 0;
+    } else {
+      cardV = parseFloat(response.prices.usd);
+    }
+
     console.log(cardV + " " + response.name);
     let old = receivingValue;
     setReceivingValue(parseFloat(cardV) + parseFloat(old));
-    console.log(receivingValue + " TradeAwayValue");
+    console.log(receivingValue + " receiving value");
   };
 
-  //NOT YET
-  const handleRecivingValue = async (card) => {
+  const handleReceivingValue = async (card) => {
     console.log("receiving triggered");
     receivingList.map((card) => {
       findValueR(card);
     });
   };
-  // NOT YET
+
   const handleTotalValue = () => {
     console.log("total triggered");
     setTradeValue(Number(tradeValue) - Number(tradeAwayValue));
@@ -136,7 +149,6 @@ export default function Trade() {
       let list = tradeAwayList;
       list.push(card);
       setTradeAwayList(list);
-      console.log(tradeAwayList);
     } else if (!tradeOrReceive) {
       let list = receivingList;
       list.push(card);
@@ -273,7 +285,13 @@ export default function Trade() {
                     onClick={() => {
                       addFuzzyCard(cardName);
                       setButtonPopUpTrade(false);
-                      handleValues();
+                      if (tradeOrReceive === true) {
+                        findValue(cardName);
+                      } else if (tradeOrReceive === false) {
+                        findValueR(cardName);
+                      } else {
+                        alert("Error fuzzyList calling which list to update");
+                      }
                     }}
                   >
                     <section className="fuzzyListItem">
@@ -337,7 +355,7 @@ export default function Trade() {
 
       <section>
         <div>
-          {tradeValue >= 0 ? (
+          {tradeValue > 0 ? (
             <p className="totalValueG">Total trade value: {tradeValue} </p>
           ) : (
             <p className="totalValueR">Total trade value: {tradeValue} </p>
