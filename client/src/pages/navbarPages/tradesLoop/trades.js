@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TradePopUp from "./tradePopup";
 import "../../../style/trade.css";
 import MagPopUp from "./magnifyPop";
@@ -30,7 +30,6 @@ export default function Trade() {
 
   const [isCard, setIsCard] = useState(false);
 
-  // All stuff Zach is working on below --->
   //This is the total value of trades
   const [tradeValue, setTradeValue] = useState(0);
   //This is total of trade away
@@ -85,18 +84,13 @@ export default function Trade() {
     console.log(cardV + " " + response.name);
     let old = receivingValue;
     setReceivingValue(parseFloat(cardV) + parseFloat(old));
-    console.log(receivingValue + " receiving value");
     handleTotalValue();
   };
 
   const handleTotalValue = () => {
-    console.log("total triggeredddd");
-    let value = tradeAwayValue - receivingValue;
-    console.log(value + " Value");
-
-    setTradeValue(Math.round(value * 100) / 100);
-
-    console.log(tradeValue + " total Value");
+    let value = Math.round((tradeAwayValue - receivingValue) * 100) / 100;
+    setTradeValue(value);
+    console.log(tradeValue);
   };
 
   //Searches the api for the user input. "fuzzy"
