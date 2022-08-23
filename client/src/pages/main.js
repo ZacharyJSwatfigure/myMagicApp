@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Home from "../pages/navbarPages/homeLoop/home";
 import Header from "../mainComponents/header.js";
 import Login from "../pages/signInUp/login";
 import Search from "../pages/navbarPages/searchLoop/search";
@@ -11,7 +12,11 @@ import "../style/navbar.css";
 
 function MainPage() {
   const [currentPage, setCurrentPage] = useState("Login");
+
   const renderPage = () => {
+    if (currentPage === "Home") {
+      return <Home />;
+    }
     if (currentPage === "Search") {
       return <Search />;
     }
