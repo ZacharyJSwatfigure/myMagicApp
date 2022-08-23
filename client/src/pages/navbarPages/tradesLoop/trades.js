@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TradePopUp from "./tradePopup";
 import "../../../style/trade.css";
 import MagPopUp from "./magnifyPop";
@@ -41,6 +41,11 @@ export default function Trade() {
   const handleUserChange = (e) => {
     setTradeUserInput(e.target.value);
   };
+
+  useEffect(() => {
+    console.log("useEffect triggered");
+    handleTotalValue();
+  }, [tradeAwayValue, receivingValue]);
 
   //this function will be ab2le to be called into trade and recive value totals with a switch ie... if false total for trade if true total for receiving
   const findValue = async (card) => {
