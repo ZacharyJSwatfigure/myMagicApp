@@ -34,3 +34,7 @@
   
   z-index: 1;
 }
+
+.close-btn:hover {
+  background-color: rgb(141, 54, 54);
+}
