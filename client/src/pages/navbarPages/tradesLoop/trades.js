@@ -63,7 +63,7 @@ export default function Trade() {
     } else {
       cardV = parseFloat(response.prices.usd);
     }
-    console.log(cardV + " " + response.name);
+
     let old = tradeAwayValue;
     setTradeAwayValue(cardV + old);
     console.log(tradeAwayValue + " TradeAwayValue");
@@ -86,14 +86,13 @@ export default function Trade() {
       cardV = parseFloat(response.prices.usd);
     }
 
-    console.log(cardV + " " + response.name);
     let old = receivingValue;
     setReceivingValue(parseFloat(cardV) + parseFloat(old));
     handleTotalValue();
   };
 
   const handleTotalValue = () => {
-    let value = Math.round((tradeAwayValue - receivingValue) * 100) / 100;
+    let value = Math.round((receivingValue - tradeAwayValue) * 100) / 100;
     setTradeValue(value);
     console.log(tradeValue);
   };
