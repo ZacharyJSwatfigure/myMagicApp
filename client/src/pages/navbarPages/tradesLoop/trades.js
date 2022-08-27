@@ -299,6 +299,7 @@ export default function Trade() {
                         return (
                           <div key={index}>
                             <a
+                              className="buyLinks"
                               href={magnifiedCard.purchase_uris[key]}
                               target="_blank"
                               rel="noreferrer"

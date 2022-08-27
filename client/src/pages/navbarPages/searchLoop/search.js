@@ -104,6 +104,28 @@ export default function Search() {
                 <div>USD: {specificCard.prices.usd}$</div>
                 <div>Foil: {specificCard.prices.usd_foil}$</div>
               </div>
+              <h1>
+                Go Buy It!
+                {console.log(specificCard.purchase_uris)}
+                {/* you stopped here working on magnified cards go buy it link */}
+                {specificCard.purchase_uris &&
+                  Object.keys(specificCard.purchase_uris).map((key, index) => {
+                    return (
+                      <div key={index}>
+                        <a
+                          className="buyLinks"
+                          href={specificCard.purchase_uris[key]}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {[key]}
+                        </a>
+                        {/* extra */}
+                        <hr />
+                      </div>
+                    );
+                  })}
+              </h1>
             </section>
           </section>
         ) : (
