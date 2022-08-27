@@ -38,3 +38,14 @@
 .close-btn:hover {
   background-color: rgb(141, 54, 54);
 }
+
+.buyLinks {
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.buyLinks:hover {
+  color: white;
+  
+}
