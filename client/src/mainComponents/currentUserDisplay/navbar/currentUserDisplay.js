@@ -1,9 +1,12 @@
 import React from "react";
+import "../../../style/currentUser.css";
 
 export default function CurrentUser() {
   return (
-    <div>
-      <h1>Username</h1>
+    <div className="currentUserAllHolder">
+      <div>
+        <h1>//CurrentUser//</h1>
+      </div>
     </div>
   );
 }
