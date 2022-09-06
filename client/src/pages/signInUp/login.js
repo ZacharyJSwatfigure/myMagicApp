@@ -24,17 +24,16 @@ export default function Login() {
   return (
     <section>
       <div className="loginHolder">
+        <h1 className="loginHeader">Login</h1>
         <section className="loginHolderInner">
-          <section>
-            <h1>Login</h1>
-          </section>
+          <section></section>
           <form
             onSubmit={() => {
               handleFormSubmit();
             }}
           >
             <div>
-              Username:{" "}
+              <div className="inputPromptLogin">Username: </div>
               <input
                 value={signIn.username}
                 type="text"
@@ -43,14 +42,14 @@ export default function Login() {
             </div>
             <br />
             <div>
-              Password:{" "}
+              <div className="inputPromptLogin">Password: </div>
               <input
                 value={signIn.password}
                 type="password"
                 placeholder="Password"
               ></input>
             </div>
-            <input type="submit" />
+            <input className="submitBtn" type="submit" />
           </form>
         </section>
       </div>
