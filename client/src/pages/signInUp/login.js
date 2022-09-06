@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../style/login.css";
 
 export default function Login() {
   //determines whether popup is enabled
@@ -22,34 +23,36 @@ export default function Login() {
   };
   return (
     <section>
-      <div>
-        <section>
-          <h1>Login</h1>
+      <div className="loginHolder">
+        <section className="loginHolderInner">
+          <section>
+            <h1>Login</h1>
+          </section>
+          <form
+            onSubmit={() => {
+              handleFormSubmit();
+            }}
+          >
+            <div>
+              Username:{" "}
+              <input
+                value={signIn.username}
+                type="text"
+                placeholder="Username"
+              ></input>
+            </div>
+            <br />
+            <div>
+              Password:{" "}
+              <input
+                value={signIn.password}
+                type="password"
+                placeholder="Password"
+              ></input>
+            </div>
+            <input type="submit" />
+          </form>
         </section>
-        <form
-          onSubmit={() => {
-            handleFormSubmit();
-          }}
-        >
-          <div>
-            Username:{" "}
-            <input
-              value={signIn.username}
-              type="text"
-              placeholder="Username"
-            ></input>
-          </div>
-          <br />
-          <div>
-            Password:{" "}
-            <input
-              value={signIn.password}
-              type="password"
-              placeholder="Password"
-            ></input>
-          </div>
-          <input type="submit" />
-        </form>
       </div>
     </section>
   );

@@ -17,6 +17,8 @@
   height: 100%;
   background-color: rgb(157,45,221);
   margin: 0 auto;
+  background: linear-gradient(225deg, #1f2538, #1a202f);
+  box-shadow:  -17px 17px 29px #151a26, 17px -17px 29px #252c42;
 }
 
 .tradeHolder {

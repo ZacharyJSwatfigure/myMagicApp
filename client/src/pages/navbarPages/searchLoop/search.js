@@ -107,7 +107,6 @@ export default function Search() {
               <h1>
                 Go Buy It!
                 {console.log(specificCard.purchase_uris)}
-                {/* you stopped here working on magnified cards go buy it link */}
                 {specificCard.purchase_uris &&
                   Object.keys(specificCard.purchase_uris).map((key, index) => {
                     return (
