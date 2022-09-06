@@ -4,13 +4,43 @@
   width: 250px;
   height: 250px;
   border-radius: 20px;
+  margin-top: 10%;
 background: linear-gradient(225deg, #1f2538, #1a202f);
-box-shadow:  -9px 9px 18px #151a26,
-             9px -9px 18px #252c42;
+box-shadow:  -9px 9px 18px #151a26, 9px -9px 18px #252c42;
+color: white;
+}
+
+.loginHeader {
+  display : flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding : 5%;
 }
 
 .loginHolderInner {
-
   margin: 5%;
   padding: 5%;
+}
+
+.inputPromptLogin {
+  padding: 5%;
+}
+
+.submitBtn {
+  display : flex;
+  margin: 0 auto;
+  margin-top: 5%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(157,45,221);
+  border: none;
+}
+
+.submitBtn:hover {
+  box-shadow: 0px 0px 10px rgb(42, 129, 57);
+  font-size: 15px;
+  cursor: pointer;
 }
