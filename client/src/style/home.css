@@ -1,4 +1,8 @@
-.allHolder {
+.welcomeHolder {
+  border-radius: 20px;
+  background: linear-gradient(225deg, #1f2538, #1a202f);
+  box-shadow:  -9px 9px 18px #151a26,
+               9px -9px 18px #252c42;
   margin: 5%;
   padding: 5%;
 }

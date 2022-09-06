@@ -12,9 +12,7 @@ export default function Header() {
             <Logo />
           </li>
           <li className="currentUser">
-            <div className="currentUserBox">
-              <CurrentUser />
-            </div>
+            <CurrentUser />
           </li>
         </ul>
       </div>

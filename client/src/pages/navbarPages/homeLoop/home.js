@@ -3,7 +3,7 @@ import "../../../style/home.css";
 
 export default function Home() {
   return (
-    <section className="allHolder">
+    <section className="welcomeHolder">
       <div>
         <div>
           <h1>Hello!</h1>
