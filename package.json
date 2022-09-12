@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/src/server.js",
-    "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "start": "node server/server.js",
+    "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "build": "cd client && npm run build"
   },
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/ZacharyJSwatfigure/myMagicApp/issues"
   },
-  "homepage": "https://github.com/ZacharyJSwatfigure/myMagicApp#readme"
+  "homepage": "https://github.com/ZacharyJSwatfigure/myMagicApp#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  }
 }
