@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
@@ -15,7 +15,7 @@ const typeDefs = gql`
     _id: ID
     totalPrice: Float
     date: String
-    collection: [Card]
+    cardCollection: [ID]
   }
 
   # type fullCard {
@@ -33,7 +33,7 @@ const typeDefs = gql`
     price: Float
   }
   input TradeInput {
-    date: Int
+    date: String
     TotalPrice: Float
     cards: [cardInput]
   }

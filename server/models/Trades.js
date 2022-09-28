@@ -1,27 +1,27 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const tradeSchema = new Schema({
-  _id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  // _id: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  // },
   date: {
     type: Date,
     required: true,
   },
   totalPrice: {
-    type: Float,
+    type: Number,
     trim: true,
   },
-  collection: [
+  cardCollection: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Card",
+      ref: 'Card',
     },
   ],
 });
 
-const Trade = model("Trade", tradeSchema);
+const Trade = model('Trade', tradeSchema);
 
 module.exports = Trade;
