@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const cardSchema = new Schema({
   cardId: {
@@ -11,11 +11,11 @@ const cardSchema = new Schema({
     required: true,
   },
   price: {
-    type: Float,
+    type: Number,
     trim: true,
   },
 });
 
-const Card = model("Card", cardSchema);
+const Card = model('Card', cardSchema);
 
 module.exports = Card;
